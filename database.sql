@@ -2,7 +2,7 @@
 this step is for 2-tier application
     
 -- Allow root to connect from the web server IP
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.31.64.167' IDENTIFIED BY '1234' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'web-server_IP' IDENTIFIED BY '1234' WITH GRANT OPTION;
 
 -- Apply changes
 FLUSH PRIVILEGES;
