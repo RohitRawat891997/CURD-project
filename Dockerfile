@@ -1,4 +1,4 @@
-FROM    php:7.1.23-apache
+FROM    php:8.5.0alpha1-apache
 COPY    .   /var/www/html/
 RUN     docker-php-ext-install pdo_mysql  \
          &&  docker-php-ext-install mysqli \
