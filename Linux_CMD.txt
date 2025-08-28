@@ -1,6 +1,6 @@
  
 [root@localhost ~]# 
-[root@localhost ~]# dnf install httpd php php-mysqlnd mariadb-server  -y
+[root@localhost ~]# dnf install httpd php php-mysqlnd mariadb-server php-fpm  -y
 Updating Subscription Management repositories.
 Unable to read consumer identity
 
@@ -173,3 +173,4 @@ success
    16  history
 [root@localhost ~]# 
 [root@localhost ~]# 
+
