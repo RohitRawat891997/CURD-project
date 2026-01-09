@@ -209,15 +209,6 @@ You successfully deployed a **Kubernetes-based CRUD application** with:
 
 ---
 
-## 👤 Author
-
-**Rohit Rawat**
-DevOps | Kubernetes | Docker | Linux | AWS
-
----
-
-Below is a **ready-to-paste Troubleshooting section** you can directly add to your `README.md`.
-It’s written in a **GitHub-professional + interview-friendly** way.
 
 ---
 
