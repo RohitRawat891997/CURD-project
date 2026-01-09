@@ -1,9 +1,9 @@
 CREATE DATABASE IF NOT EXISTS customer_db;
 USE customer_db;
-CREATE TABLE customers (
+CREATE TABLE IF NOT EXISTS customers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     phone VARCHAR(15) NOT NULL,
-    address TEXT NOT NULL
+    address TEXT NOT NULL 
 );
