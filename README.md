@@ -1,211 +1,164 @@
-Below is a **clean, readable, GitHub-ready `README.md` version** of your notes.
-I’ve converted raw terminal output into **structured steps**, **clear headings**, and **proper code blocks**, suitable for documentation or a project repo.
+Here is a **clean, beginner-friendly, GitHub-ready `README.md` section** for your **Docker practice (CRUD Project)**.
+I’ve converted raw history into **clear steps + explanations**, perfect for learning & interviews.
 
 ---
 
-# LAMP Stack Setup (Apache + PHP + MariaDB) on RHEL / Rocky Linux
+# Docker Practice – CRUD Project (2-Tier Application)
 
-This guide explains how to install and configure **Apache, PHP, and MariaDB**, create a database and table, deploy a PHP application, and configure **SELinux** and **Firewall**.
+This project demonstrates a **2-tier Docker application** using **Docker Compose**, consisting of:
+
+* **Web Application (PHP)**
+* **MySQL Database**
+
+The setup helps you practice **Docker, Docker Compose, containers, networking, and exec usage**.
 
 ---
 
 ## 📌 Prerequisites
 
-* RHEL / Rocky Linux / AlmaLinux (RHEL 9 based)
-* Root user access
-
----
-
-## 1️⃣ Install Required Packages
-
-Install Apache, PHP, MariaDB, and PHP MySQL extension:
+Make sure Docker and Docker Compose are installed:
 
 ```bash
-dnf install httpd php php-mysqlnd mariadb-server php-fpm -y
-```
-
-> ℹ️ Note:
-> Subscription warnings can be ignored for local or lab setups.
-
----
-
-## 2️⃣ Start and Enable Apache (httpd)
-
-```bash
-systemctl start httpd
-systemctl enable httpd
-```
-
-Verify Apache is running:
-
-```bash
-systemctl status httpd
+docker --version
+docker-compose --version
 ```
 
 ---
 
-## 3️⃣ Start and Enable MariaDB
+## 1️⃣ Clone the Project Repository
+
+Clone the CRUD project from GitHub:
 
 ```bash
-systemctl start mariadb
-systemctl enable mariadb
+git clone https://github.com/RohitRawat891997/CURD-project.git
 ```
 
-Verify MariaDB status:
+Move into the project directory:
 
 ```bash
-systemctl status mariadb
+cd CURD-project/
+```
+
+Verify files:
+
+```bash
+ls
 ```
 
 ---
 
-## 4️⃣ Secure MariaDB Installation
+## 2️⃣ Cleanup Old Files (Optional)
 
-Run the MariaDB security script:
-
-```bash
-mysql_secure_installation
-```
-
-### Recommended Options
-
-* Set root password ✅
-* Remove anonymous users ✅
-* Disallow remote root login ✅
-* Remove test database ✅
-* Reload privilege tables ✅
-
-This step is **mandatory for production-level security**.
-
----
-
-## 5️⃣ Login to MariaDB
+Remove unused or old database directory (if present):
 
 ```bash
-mysql -uroot -p
+rm -rf database.sql-2-tier
 ```
+
+> ⚠️ This step is optional and used for clean practice runs.
 
 ---
 
-## 6️⃣ Create Database and Table
+## 3️⃣ Build and Start Containers Using Docker Compose
 
-### Create Database
-
-```sql
-CREATE DATABASE customer_db;
-```
-
-### Select Database
-
-```sql
-USE customer_db;
-```
-
-### Create Table
-
-```sql
-CREATE TABLE customers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    phone VARCHAR(15) NOT NULL,
-    address TEXT NOT NULL
-);
-```
-
-Exit MariaDB:
-
-```sql
-exit;
-```
-
----
-
-## 7️⃣ Deploy Web Application Files
-
-### Create HTML & PHP Files
+Build images and start containers in detached mode:
 
 ```bash
-vim /var/www/html/index.html
-vim /var/www/html/submit.php
+docker-compose up -d --build
 ```
 
-> `index.html` → Frontend form
-> `submit.php` → PHP script to insert data into MariaDB
+### What this command does:
+
+* Builds Docker images
+* Creates a Docker network
+* Starts MySQL & Web containers
+* Runs everything in background (`-d`)
 
 ---
 
-## 8️⃣ Restart Apache
+## 4️⃣ Verify Running Containers
+
+Check running containers:
 
 ```bash
-systemctl restart httpd
+docker ps
 ```
+
+Expected containers:
+
+* Web container (Apache + PHP)
+* MySQL container
 
 ---
 
-## 9️⃣ Configure SELinux for Apache + PHP
+## 5️⃣ Access MySQL Container
 
-Allow Apache to read/write files:
+Enter the MySQL container shell:
 
 ```bash
-restorecon -Rv /var/www/html/
-chcon -R -t httpd_sys_rw_content_t /var/www/html/
+docker exec -it curd-project_mysql_1 bash
 ```
 
-> Required when PHP interacts with files or databases on SELinux-enabled systems.
+From here, you can:
+
+* Login to MySQL
+* Check databases & tables
+* Debug database issues
 
 ---
 
-## 🔟 Configure Firewall (Allow HTTP)
+## 📂 Project Architecture (2-Tier)
+
+```
+Client (Browser)
+      |
+      v
+Web Container (PHP + Apache)
+      |
+      v
+MySQL Container
+```
+
+---
+
+## 🧠 Docker Concepts Practiced
+
+* Dockerfile
+* Docker Compose
+* Multi-container application
+* Container networking
+* `docker exec`
+* Persistent MySQL container usage
+
+---
+
+## ✅ Common Docker Commands Used
 
 ```bash
-firewall-cmd --permanent --add-service=http
-firewall-cmd --reload
+docker ps
+docker-compose up -d --build
+docker exec -it <container_name> bash
 ```
-
-Verify:
-
-```bash
-firewall-cmd --list-all
-```
-
----
-
-## ✅ Final Verification Checklist
-
-* Apache running ✔️
-* MariaDB running ✔️
-* Database & table created ✔️
-* PHP files deployed ✔️
-* SELinux configured ✔️
-* Firewall HTTP allowed ✔️
-
----
-
-## 📂 Important Paths
-
-| Component      | Path             |
-| -------------- | ---------------- |
-| Web Root       | `/var/www/html/` |
-| Apache Config  | `/etc/httpd/`    |
-| MariaDB Config | `/etc/my.cnf`    |
 
 ---
 
 ## 🚀 Result
 
-You now have a **working LAMP stack** with:
+You successfully deployed a **CRUD application** using:
 
-* Apache web server
-* PHP backend
-* MariaDB database
-* Secure + production-ready configuration
+* Docker
+* Docker Compose
+* PHP
+* MySQL
+
+This is a **real-world beginner-friendly DevOps practice project**.
 
 ---
 
 ### ✍️ Author
 
 **Rohit Rawat**
-DevOps | Linux | Docker | Kubernetes | AWS
+DevOps | Docker | Kubernetes | Linux | AWS
 
 ---
+
