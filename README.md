@@ -1,6 +1,3 @@
-Below is a **clean, professional, GitHub-ready `README.md`** for your **Kubernetes CRUD Project** based exactly on the steps you followed.
-You can **copy–paste this directly** into your repo.
-
 ---
 
 # Kubernetes CRUD Project (MySQL + Web App)
