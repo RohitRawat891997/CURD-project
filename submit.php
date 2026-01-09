@@ -1,8 +1,8 @@
 <?php
 // Database connection details
-$servername = "localhost";
+$servername = "mysql";
 $username = "root"; // Replace with your MySQL username
-$password = "your_password"; // Replace with your MySQL password
+$password = "1234"; // Replace with your MySQL password
 $dbname = "customer_db";
 
 // Create connection
@@ -30,4 +30,5 @@ if ($conn->query($sql) === TRUE) {
 
 // Close connection
 $conn->close();
+
 ?>
