@@ -1,32 +1,50 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: mypod
-  labels:
-    role: web
+  name: web-deploy
 spec:
-  containers:
-  - name: webserver
-    image: rohitrawat891997/webserver123:latest
-    ports:
-    - containerPort: 80
-    env:
-    - name: MYSQL_ROOT_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: web-secrets
-          key: mypass
-    - name: MYSQL_USER
-      valueFrom:
-        secretKeyRef:
-          name: web-secrets
-          key: myuser
-    - name: MYSQL_HOST
-      value: mysql
-    - name: MYSQL_DB
-      value: customer_db
-    readinessProbe:
-      tcpSocket:
-        port: 80
-      initialDelaySeconds: 15
-      periodSeconds: 10
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: webserver
+        image: rohitrawat891997/webserver123:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: web-secrets
+              key: mypass
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: web-secrets
+              key: myuser
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_DB
+          value: customer_db
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          timeoutSeconds: 3
+          failureThreshold: 3
